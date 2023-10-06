@@ -51,7 +51,7 @@ function FileUploader() {
     }
 
     try {
-      const response = await fetch("http://localhost:4000/userAccount", {
+      const response = await fetch("http://localhost:8000/userAccount", {
         method: "POST",
         body: formData,
       });

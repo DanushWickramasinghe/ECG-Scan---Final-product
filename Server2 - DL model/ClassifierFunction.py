@@ -149,7 +149,7 @@ def ClassifierFunction(path):
 
     # Here we have defined the model structure and loaded it.
 
-    num_classes = 19
+    num_classes = 23
     num_leads = final_ECG_data_array.shape[0]
     num_data_points = final_ECG_data_array.shape[1]
 
@@ -180,7 +180,7 @@ def ClassifierFunction(path):
 
     # Load the saved model's state dictionary
     model.load_state_dict(torch.load(
-        "E:\My Projects\ECG - Scan - MVP\MVP for now\FINALLL_model.pth"))
+        "E:\My Projects\ECG-Scan - Final Product\ECG-Scan---Final-product\Server2 - DL model\Trained_model.pth"))
 
     # Change dimensions of the final ECG data array before making it a tensor.
     Final_ECG_Data_Array = np.expand_dims(final_ECG_data_array, axis=0)
@@ -190,8 +190,11 @@ def ClassifierFunction(path):
     age_val_tensor = torch.tensor(input_age_data, dtype=torch.float32)
     sex_val_tensor = torch.tensor(input_sex_data, dtype=torch.float32)
 
-    label_19_array = ['111975006', '164873001', '164889003', '164909002', '164934002', '17338001', '270492004', '39732003', '425623009',
-                      '426177001', '426783006', '427084000', '427393009', '428750005', '445118002', '59118001', '67741000119109', '698252002', '713426002']
+    # label_19_array = ['111975006', '164873001', '164889003', '164909002', '164934002', '17338001', '270492004', '39732003', '425623009',
+    #                   '426177001', '426783006', '427084000', '427393009', '428750005', '445118002', '59118001', '67741000119109', '698252002', '713426002']
+
+    label_23_array = ['426783006', '164865005', '164861001', '428750005', '59118001', '164889003', '39732003', '164934002', '164873001', '270492004', '164884008', '426177001',
+                      '164867002', '429622005', '284470004', '164909002', '111975006', '427084000', '713426002', '67741000119109', '164951009', '164930006', '10370003', '17338001']
 
     # Set the model to evaluation mode
     model.eval()
@@ -204,7 +207,9 @@ def ClassifierFunction(path):
         # Get predicted class labels
         predicted_labels = val_outputs.argmax(dim=1)
 
-    predicted_output = label_19_array[predicted_labels.item()]
+    predicted_output = label_23_array[predicted_labels.item()]
 
     print('predicted output :', predicted_output)
     print('real value       :', input_lable_data)
+
+    return predicted_output, input_lable_data

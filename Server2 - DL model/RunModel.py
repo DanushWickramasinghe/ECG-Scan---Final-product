@@ -41,6 +41,7 @@ async def upload_files(
 
     Input_data_folder_path = os.path.join(save_dir, subdirectory)
 
-    ClassifierFunction(Input_data_folder_path)
+    predicted_output, input_label_data = ClassifierFunction(
+        Input_data_folder_path)
 
-    return {"message": "Files uploaded and saved successfully"}
+    return {"message": "Files uploaded and saved successfully", "predicted": predicted_output, "real": input_label_data}

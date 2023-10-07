@@ -57,7 +57,15 @@ function FileUploader() {
       });
 
       if (response.ok) {
+        const data = await response.json(); // Parse the JSON response
         alert("Files Uploaded");
+        console.log(
+          data.message,
+          ", predicted: ",
+          data.predicted,
+          " , real: ",
+          data.real
+        ); // Log the message from the parsed JSON data
       } else {
         console.error("Some error occurred.");
       }

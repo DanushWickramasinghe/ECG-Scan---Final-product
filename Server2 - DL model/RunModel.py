@@ -1,8 +1,7 @@
 from fastapi import FastAPI, File, UploadFile, Form
 from fastapi.middleware.cors import CORSMiddleware
-from scipy.io import loadmat
-import io
 from ClassifierFunction import ClassifierFunction
+import os
 
 app = FastAPI()
 
@@ -20,35 +19,28 @@ async def upload_files(
     matFile: UploadFile = File(),
     headerFile: UploadFile = File(),
 ):
-    # Access the uploaded files as UploadFile objects
-    mat_file_contents = await matFile.read()
 
-    # Parse the content of the uploaded .mat file
-    loaded_data = loadmat(io.BytesIO(mat_file_contents))
+    # Define the directory where you want to save the files
+    save_dir = "E:\My Projects\ECG-Scan - Final Product\ECG-Scan---Final-product\Input_ECG_Folder"
 
-    # Access the 2D array
-    if 'val' in loaded_data:
-        mat_2D_array = loaded_data['your_variable_name']
-        # Now 'two_dimensional_array' contains your 2D array
-    else:
-        # Handle the case where the variable name is not found
+    # Create a subdirectory with the name "folder" + matFile's name
+    subdirectory = "folder" + matFile.filename
+    save_dir_with_subdirectory = os.path.join(save_dir, subdirectory)
+    os.makedirs(save_dir_with_subdirectory, exist_ok=True)
 
+    # Save the 'matFile' to the specified subdirectory
+    mat_file_path = os.path.join(save_dir_with_subdirectory, matFile.filename)
+    with open(mat_file_path, "wb") as mat_file_destination:
+        mat_file_destination.write(await matFile.read())
 
+    # Save the 'headerFile' to the specified subdirectory
+    header_file_path = os.path.join(
+        save_dir_with_subdirectory, headerFile.filename)
+    with open(header_file_path, "wb") as header_file_destination:
+        header_file_destination.write(await headerFile.read())
 
+    Input_data_folder_path = os.path.join(save_dir, subdirectory)
 
+    ClassifierFunction(Input_data_folder_path)
 
-        
-
-    # header_file_contents = await headerFile.read()
-    #################### Edit this codeee ########################
-    
-    
-    
-    
-    
-    
-    
-    # Process the uploaded files and form data as needed
-    ClassifierFunction(mat_2D_array, headerFile)
-
-    return {"message": "Files uploaded and form data received successfully"}
+    return {"message": "Files uploaded and saved successfully"}

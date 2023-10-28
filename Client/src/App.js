@@ -5,8 +5,9 @@ import About from "./Views/About";
 import Register from "./Views/Register";
 import Dashboard from "./Views/Dashboard";
 import Navbar from "./Views/Navbar";
-import PageNotFound from "./Views/PageNotFound";
 import FileUploader from "./Views/Fileupload";
+import DataVisualization from './Views/DataVisualization';
+
 
 function App() {
   return (
@@ -20,11 +21,10 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/register" element={<Register />} />
           <Route path="/useraccount" element={<FileUploader />} />
-          <Route path="*" element={<PageNotFound />} />
+          <Route path="/DataVisualization" element={<DataVisualization />} />
         </Routes>
       </Router>
     </div>
   );
 }
-
 export default App;

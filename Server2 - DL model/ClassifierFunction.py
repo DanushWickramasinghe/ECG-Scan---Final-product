@@ -5,6 +5,7 @@ from scipy import io
 from scipy.signal import resample
 import torch
 import torch.nn as nn
+import csv
 
 
 def ClassifierFunction(path):
@@ -12,6 +13,7 @@ def ClassifierFunction(path):
     input_age_data = np.empty(1)
     input_sex_data = np.empty(1)
     input_lable_data = np.empty(1, dtype='<U1000')
+
 
     found_initial_frequency = False
 
@@ -180,7 +182,7 @@ def ClassifierFunction(path):
 
     # Load the saved model's state dictionary
     model.load_state_dict(torch.load(
-        "E:\My Projects\ECG-Scan - Final Product\ECG-Scan---Final-product\Server2 - DL model\Trained_model.pth"))
+        "Trained_model.pth"))
 
     # Change dimensions of the final ECG data array before making it a tensor.
     Final_ECG_Data_Array = np.expand_dims(final_ECG_data_array, axis=0)
@@ -209,7 +211,33 @@ def ClassifierFunction(path):
 
     predicted_output = label_23_array[predicted_labels.item()]
 
-    print('predicted output :', predicted_output)
-    print('real value       :', input_lable_data)
+    # Load the CSV data into a 2D list
+    data_list = []
+    with open('Dx_map.csv', newline='') as csvfile:
+        csvreader = csv.reader(csvfile)
+        next(csvreader)  # Skip the header row
+        for row in csvreader:
+            data_list.append([row[0], row[1], row[2]])
 
-    return predicted_output, input_lable_data
+    # Function to find the names and abbreviations based on a list of values
+    def find_names_and_abbreviations(target_values):
+        results = []
+        for target_value in target_values:
+            for row in data_list:
+                if target_value in row:
+                    results.append(row[0]+ " - "+ row[2])  # Append the Name and Abbreviation
+
+        return results
+
+    # Find the relevant names and abbreviations for both predicted output and real values
+    predicted_outputs=[str(predicted_output)]
+    predicted_output_info = find_names_and_abbreviations(predicted_outputs)[0]
+    real_value_info = find_names_and_abbreviations(input_lable_data)
+    print('predicted output :', predicted_output_info)
+    print('real value       :', real_value_info)
+    print(age_value)
+    print(sex_type)
+    print(final_ECG_data_array.shape)
+   
+
+    return predicted_output_info, real_value_info ,age_value ,sex_type ,final_ECG_data_array

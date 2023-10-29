@@ -2,6 +2,7 @@ from fastapi import FastAPI, File, UploadFile, Form
 from fastapi.middleware.cors import CORSMiddleware
 from ClassifierFunction import ClassifierFunction
 import os
+import scipy.io
 
 app = FastAPI()
 
@@ -21,7 +22,7 @@ async def upload_files(
 ):
 
     # Define the directory where you want to save the files
-    save_dir = "E:\My Projects\ECG-Scan - Final Product\ECG-Scan---Final-product\Input_ECG_Folder"
+    save_dir = "Input_ECG_Folder"
 
     # Create a subdirectory with the name "folder" + matFile's name
     subdirectory = "folder" + matFile.filename
@@ -41,7 +42,12 @@ async def upload_files(
 
     Input_data_folder_path = os.path.join(save_dir, subdirectory)
 
-    predicted_output, input_label_data = ClassifierFunction(
+    predicted_output, input_label_data ,age_value ,sex_type ,ecg_np_data = ClassifierFunction(
         Input_data_folder_path)
+   
+    #output_filename = os.path.basename(mat_file_path)
+    #ecg_np_data = scipy.io.loadmat('Input_ECG_Folder/folder'+output_filename +"/"+ output_filename) 
+    Visualizing_data = ecg_np_data.tolist()
+    #Visualizing_data =[12,[12,23],12,32,12]
 
-    return {"message": "Files uploaded and saved successfully", "predicted": predicted_output, "real": input_label_data}
+    return {"predicted": predicted_output, "real": input_label_data , "Age": age_value ,"Sex": sex_type ,"Visualizing_data": Visualizing_data }

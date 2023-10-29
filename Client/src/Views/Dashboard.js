@@ -1,9 +1,12 @@
 import React from "react";
+import DeathStats from "./DeathStats";
+import ECGchart from "./ECGchart";
 
 const Dashboard = () => {
   return (
     <div className="dashboard-page">
-      <h1>This is a Dashboard.</h1>
+      <ECGchart className="ecg-chart" />
+      <DeathStats className="bar-chart" />
     </div>
   );
 };

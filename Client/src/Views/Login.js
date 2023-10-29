@@ -1,5 +1,6 @@
 import "./App.css";
-import { useRef, useState, useEffect } from "react";
+import "./Login.css";
+import React, { useRef, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -49,56 +50,58 @@ const Login = () => {
   };
 
   return (
-    <section className="login-page">
-      <p
-        ref={errRef}
-        className={errMsg ? "errmsg" : "offscreen"}
-        aria-live="assertive"
-      >
-        {errMsg}
-      </p>
-      <form className="login-form" onSubmit={handleSubmit}>
-        <h1 className="topic">Login</h1>
-        <label className="field-name" htmlFor="username">
-          Username:
-        </label>
-        <input
-          className="typing-boxes"
-          type="text"
-          id="username"
-          placeholder="Enter the Username"
-          ref={userRef}
-          autoComplete="off"
-          onChange={(e) => setUser(e.target.value)}
-          required
-        />
-
-        <label className="field-name" htmlFor="password">
-          Password:
-        </label>
-        <input
-          className="typing-boxes"
-          type="password" // Type "password" will not support auto-complete anyway.
-          id="password"
-          placeholder="Enter your password"
-          onChange={(e) => setPwd(e.target.value)}
-          required
-        />
-
-        <button className="submit-button" type="submit">
-          Log In
-        </button>
-        <p className="sign-up-link">
-          Did not register yet?
-          <br />
-          <span className="line">
-            <Link to="/register" className="link-btn">
-              Register
-            </Link>
-          </span>
+    <div className="login-page">
+      <section>
+        <p
+          ref={errRef}
+          className={errMsg ? "errmsg" : "offscreen"}
+          aria-live="assertive"
+        >
+          {errMsg}
         </p>
-      </form>
-    </section>
+        <form className="login-form" onSubmit={handleSubmit}>
+          <h1 className="topic">Login</h1>
+          <label className="field-name" htmlFor="username">
+            Username:
+          </label>
+          <input
+            className="typing-boxes"
+            type="text"
+            id="username"
+            placeholder="Enter the Username"
+            ref={userRef}
+            autoComplete="off"
+            onChange={(e) => setUser(e.target.value)}
+            required
+          />
+
+          <label className="field-name" htmlFor="password">
+            Password:
+          </label>
+          <input
+            className="typing-boxes"
+            type="password" // Type "password" will not support auto-complete anyway.
+            id="password"
+            placeholder="Enter your password"
+            onChange={(e) => setPwd(e.target.value)}
+            required
+          />
+
+          <button className="submit-button" type="submit">
+            Log In
+          </button>
+          <p className="sign-up-link">
+            Did not register yet?
+            <br />
+            <span className="line">
+              <Link to="/register" className="link-btn">
+                Register
+              </Link>
+            </span>
+          </p>
+        </form>
+      </section>
+    </div>
   );
 };
 

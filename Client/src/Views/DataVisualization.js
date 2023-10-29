@@ -13,6 +13,12 @@ const dataStyle = {
   margin: "0 auto",
 };
 
+const predicted_text = {
+  color: "#1734cb",
+  fontSize: "larger",
+  fontWeight: "bold",
+};
+
 function DataVisualization() {
   const location = useLocation();
   const data = location.state.data;
@@ -57,7 +63,7 @@ function DataVisualization() {
   return (
     <div style={dataStyle}>
         <h1>Result</h1>
-        <p>Predicted: {data.predicted}</p>
+        <p style={predicted_text}>Predicted: {data.predicted}</p>
         <p>Real: {data.real[0]}</p>
         <p>Age: {data.Age}</p>
         <p>Sex: {data.Sex}</p>

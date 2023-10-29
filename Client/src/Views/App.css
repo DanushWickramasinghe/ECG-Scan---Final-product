@@ -190,3 +190,11 @@
     color: white;
     cursor: pointer;
 }
+
+
+/* Following are the styles of About page */
+
+.about-box{
+    color: #000000;
+    background-color: teal;
+}

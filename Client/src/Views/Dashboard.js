@@ -4,9 +4,13 @@ import ECGchart from "./ECGchart";
 
 const Dashboard = () => {
   return (
-    <div className="dashboard-page">
-      <ECGchart className="ecg-chart" />
-      <DeathStats className="bar-chart" />
+    <div>
+      <div className="line-chart">
+        <ECGchart />
+      </div>
+      <div className="bar-chart">
+        <DeathStats />
+      </div>
     </div>
   );
 };

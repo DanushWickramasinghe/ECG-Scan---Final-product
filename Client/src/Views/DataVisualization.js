@@ -1,23 +1,6 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Plot from "react-plotly.js";
-
-const dataStyle = {
-  position: "relative",
-  top: "145px",
-  border: "1px solid #ccc",
-  borderRadius: "8px",
-  padding: "16px",
-  backgroundColor: "grey",
-  maxWidth: "700px",
-  margin: "0 auto",
-};
-
-const predicted_text = {
-  color: "#1734cb",
-  fontSize: "larger",
-  fontWeight: "bold",
-};
 
 function DataVisualization() {
   const location = useLocation();
@@ -60,17 +43,25 @@ function DataVisualization() {
     );
   }
 
+  const navigate = useNavigate();
+
+  const NavigateToBegining = () => {
+    navigate("/useraccount");
+  };
+
   return (
-    <div style={dataStyle}>
-        <h1>Result</h1>
-        <p style={predicted_text}>Predicted: {data.predicted}</p>
-        <p>Real: {data.real[0]}</p>
-        <p>Age: {data.Age}</p>
-        <p>Sex: {data.Sex}</p>
-        <div>{subplots}</div>
+    <div className="report">
+      <h1 className="reportheading">Report</h1>
+      <button className="uploadagain" onClick={NavigateToBegining}>
+        Upload Again
+      </button>
+      <p className="demographicdata">Age: {data.Age}</p>
+      <p className="demographicdata">Sex: {data.Sex}</p>
+      <p className="predicted">You are suffering with: {data.predicted}</p>
+      {/* <p>Real: {data.real[0]}</p> */}
+      <div>{subplots}</div>
     </div>
   );
 }
 
 export default DataVisualization;
-

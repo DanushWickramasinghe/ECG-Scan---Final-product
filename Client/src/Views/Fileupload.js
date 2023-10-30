@@ -9,7 +9,7 @@ function FileUploader() {
 
   const [matFile, setMatFile] = useState(null);
   const [headerFile, setHeaderFile] = useState(null);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   // Programmatically click the hidden file input element when the Button component is clicked
   const handleClick = (inputRef) => () => {
@@ -60,8 +60,8 @@ function FileUploader() {
 
       if (response.ok) {
         const data = await response.json(); // Parse the JSON response
-        alert("Files Uploaded");
-        navigate("/DataVisualization", { state: { data:data } });
+        // alert("Files Uploaded");
+        navigate("/DataVisualization", { state: { data: data } });
       } else {
         console.error("Some error occurred.");
       }
